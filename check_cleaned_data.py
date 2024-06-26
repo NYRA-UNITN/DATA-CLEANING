@@ -1,15 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import pandas as pd
 
 df=pd.read_csv('cleaned_dataset.csv')
-
-
-# In[2]:
 
 
 # Check for duplicates based on all columns
@@ -21,10 +12,6 @@ if not duplicate_rows.empty:
 else:
     print("No duplicate rows found.")
 
-
-# In[3]:
-
-
 null_values = df.isnull().any()
 
 if null_values.any():
@@ -32,9 +19,6 @@ if null_values.any():
     print(null_values[null_values])  # Print columns that have null values
 else:
     print("No null values found.")
-
-
-# In[4]:
 
 
 unknown_values = (df == 'Unknown').any()
@@ -46,25 +30,14 @@ else:
     print("No 'Unknown' values found.")
 
 
-# In[5]:
-
-
 date_formats = df['Join Date'].apply(lambda x: pd.to_datetime(x, errors='coerce').strftime('%Y-%m-%d') if pd.notna(x) else None).dropna().unique()
 
 if len(date_formats) == 1:
     print(f"The common date format in the 'Join Date' column is: {date_formats[0]}")
 else:
     print("Multiple date formats are present. Additional analysis may be needed.")
-
-
-# In[6]:
-
-
-countdate=df['Join Date'].count().sum()
+ntdate=df['Join Date'].count().sum()
 print('COUNT OF VALUES:', countdate)
-
-
-# In[7]:
 
 
 date_formats = df['Join Date'].apply(lambda x: pd.to_datetime(x, errors='coerce').strftime('%Y-%m-%d') if pd.notna(x) else None).dropna().unique()
@@ -72,7 +45,6 @@ date_formats = df['Join Date'].apply(lambda x: pd.to_datetime(x, errors='coerce'
 if len(date_formats) == 1:
     print(f"The common date format in the 'Join Date' column is: {date_formats[0]}")
 else:
-    
     # Filter rows with dates not matching the unique formats
     filtered_df = df[~df['Join Date'].isin(date_formats)]
 
@@ -81,4 +53,3 @@ else:
         print(filtered_df[['Join Date']])
     else:
         print("\nNo rows found with multiple date formats.")
-
